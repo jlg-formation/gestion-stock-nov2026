@@ -1,8 +1,13 @@
+import { Route, Routes } from "react-router";
+import Home from "../routes/Home";
+import About from "../routes/About";
+
 export default function Body() {
   return (
-    <main>
-      <h1>Gérer efficacement votre stock</h1>
-      <button>Voir le stock</button>
-    </main>
+    <Routes>
+      <Route index element={<Home />} />
+      <Route path="about" element={<About />} />
+      {/* <Route path="stock" element={<StockList />} /> */}
+    </Routes>
   );
 }
