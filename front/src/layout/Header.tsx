@@ -1,7 +1,7 @@
 export default function Header() {
   return (
     <header>
-      <img src="/logo.svg" alt="Logo" />
+      <img src={`${import.meta.env.BASE_URL}logo.svg`} alt="Logo" />
       <span>Gestion Stock</span>
     </header>
   );
