@@ -41,6 +41,8 @@ main {
   flex-direction: column;
   justify-content: center;
   align-items: center;
+  /* centre aussi le texte sur les lignes (utile sur mobile) */
+  text-align: center;
 }
 
 button {
