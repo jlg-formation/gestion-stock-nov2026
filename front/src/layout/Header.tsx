@@ -1,7 +1,9 @@
+import logo from "../assets/logo.svg";
+
 export default function Header() {
   return (
     <header>
-      <img src={`${import.meta.env.BASE_URL}logo.svg`} alt="Logo" />
+      <img src={logo} alt="Logo" />
       <span>Gestion Stock</span>
     </header>
   );
