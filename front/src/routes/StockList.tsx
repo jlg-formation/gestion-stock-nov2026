@@ -16,7 +16,7 @@ export default function StockList() {
         setErrorMsg("");
         setIsPending(true);
         console.log("loading articles...");
-        await sleep(2000);
+        await sleep(300);
         const response = await fetch("/api/articles", {
           signal: controller.signal,
         });
