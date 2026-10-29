@@ -1,6 +1,7 @@
 /* ne met que des niveaux de gris, pas de couleur */
 
 @import "./css/table.css";
+@import "./css/form.css";
 
 body {
   margin: 0;
