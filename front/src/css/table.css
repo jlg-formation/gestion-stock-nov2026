@@ -1,0 +1,43 @@
+div.content {
+  display: flex;
+  flex-flow: column;
+  gap: 1em;
+}
+
+table {
+  background-color: white;
+  border-spacing: 0;
+  border-radius: 0.3em;
+  border: 0.1em solid #bbb;
+
+  thead {
+    background-color: #bbb;
+  }
+
+  td,
+  th {
+    padding: 0.5em 1em;
+  }
+
+  tbody {
+    cursor: pointer;
+    tr {
+      &:nth-child(even) {
+        background-color: #eee;
+      }
+    }
+
+    tr:hover {
+      background-color: #ddd;
+    }
+
+    .name {
+      text-align: left;
+    }
+
+    .price,
+    .qty {
+      text-align: right;
+    }
+  }
+}
