@@ -1,12 +1,20 @@
+import { useEffect, useState } from "react";
 import type { Article } from "../types/Article";
 
-const articles: Article[] = [
-  { id: "a1", name: "Tournevis", price: 2.99, qty: 1234 },
-  { id: "a2", name: "Pelle", price: 12.99, qty: 123 },
-  { id: "a3", name: "Pioche", price: 2, qty: 12 },
-];
-
 export default function StockList() {
+  const [articles, setArticles] = useState<Article[]>([]);
+
+  useEffect(() => {
+    const load = async () => {
+      console.log("loading articles...");
+      const response = await fetch("/api/articles");
+      const json = await response.json();
+      setArticles(json);
+    };
+
+    load();
+  }, []);
+
   return (
     <main>
       <h1>Liste du stock</h1>
