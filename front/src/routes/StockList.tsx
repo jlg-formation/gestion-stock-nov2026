@@ -1,24 +1,9 @@
 import { Link } from "react-router";
 import TBody from "../components/TBody";
-import { useArticleStore } from "../stores/ArticleStore";
-import { useEffect } from "react";
+import { useStockList } from "../misc/useStockList";
 
 export default function StockList() {
-  const myRefresh = useArticleStore((state) => state.refresh);
-  const { articles, isPending, errorMsg } = useArticleStore();
-
-  useEffect(() => {
-    const controller = new AbortController();
-    const load = async () => {
-      await myRefresh(controller);
-      console.log("fini");
-    };
-    load();
-
-    return () => {
-      controller.abort();
-    };
-  }, [myRefresh]);
+  const { articles, errorMsg, isPending } = useStockList();
 
   return (
     <main>
