@@ -4,13 +4,20 @@ import { useArticleStore } from "../stores/ArticleStore";
 import { useEffect } from "react";
 
 export default function StockList() {
-  const { refresh: myRefresh, articles, isPending, errorMsg } = useArticleStore();
+  const myRefresh = useArticleStore((state) => state.refresh);
+  const { articles, isPending, errorMsg } = useArticleStore();
 
   useEffect(() => {
+    const controller = new AbortController();
     const load = async () => {
-      await myRefresh();
+      await myRefresh(controller);
+      console.log("fini");
     };
     load();
+
+    return () => {
+      controller.abort();
+    };
   }, [myRefresh]);
 
   return (
