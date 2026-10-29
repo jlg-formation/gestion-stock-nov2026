@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { sleep } from "../misc/sleep";
 import type { Article } from "../types/Article";
 import TBody from "../components/TBody";
+import { Link } from "react-router";
 
 export default function StockList() {
   const [articles, setArticles] = useState<Article[]>([]);
@@ -52,7 +53,9 @@ export default function StockList() {
       <div className="content">
         <nav>
           <button>Rafraichir</button>
-          <button>Ajouter</button>
+          <Link to="/stock/add" className="button">
+            Ajouter
+          </Link>
           <button>Supprimer</button>
         </nav>
         <table>

@@ -64,6 +64,7 @@ a.button {
   border-radius: 4px;
   cursor: pointer;
   text-decoration: inherit;
+  font-size: 1em;
 }
 
 button:hover {
