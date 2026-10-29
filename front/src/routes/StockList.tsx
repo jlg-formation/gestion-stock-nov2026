@@ -1,3 +1,11 @@
+import type { Article } from "../types/Article";
+
+const articles: Article[] = [
+  { id: "a1", name: "Tournevis", price: 2.99, qty: 1234 },
+  { id: "a2", name: "Pelle", price: 12.99, qty: 123 },
+  { id: "a3", name: "Pioche", price: 2, qty: 12 },
+];
+
 export default function StockList() {
   return (
     <main>
@@ -17,21 +25,13 @@ export default function StockList() {
             </tr>
           </thead>
           <tbody>
-            <tr>
-              <td className="name">Tournevis</td>
-              <td className="price">4,50 €</td>
-              <td className="qty">12</td>
-            </tr>
-            <tr>
-              <td className="name">Pelle</td>
-              <td className="price">14,50 €</td>
-              <td className="qty">123</td>
-            </tr>
-            <tr>
-              <td className="name">Pioche</td>
-              <td className="price">22,00 €</td>
-              <td className="qty">5</td>
-            </tr>
+            {articles.map((a) => (
+              <tr key={a.id}>
+                <td className="name">{a.name}</td>
+                <td className="price">{a.price} €</td>
+                <td className="qty">{a.qty}</td>
+              </tr>
+            ))}
           </tbody>
         </table>
       </div>
