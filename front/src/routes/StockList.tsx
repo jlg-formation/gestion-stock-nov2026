@@ -1,16 +1,19 @@
 import { useEffect, useState } from "react";
 import { sleep } from "../misc/sleep";
 import type { Article } from "../types/Article";
+import TBody from "../components/TBody";
 
 export default function StockList() {
   const [articles, setArticles] = useState<Article[]>([]);
   const [errorMsg, setErrorMsg] = useState("");
+  const [isPending, setIsPending] = useState(false);
 
   useEffect(() => {
     const controller = new AbortController();
     const load = async () => {
       try {
         setErrorMsg("");
+        setIsPending(true);
         console.log("loading articles...");
         await sleep(2000);
         const response = await fetch("/api/articles", {
@@ -29,6 +32,9 @@ export default function StockList() {
         }
         console.log("err: ", err);
         setErrorMsg("Erreur Technique (chargement des articles impossible)");
+        setArticles([]);
+      } finally {
+        setIsPending(false);
       }
     };
 
@@ -57,16 +63,9 @@ export default function StockList() {
               <th className="qty">Quantité</th>
             </tr>
           </thead>
-          <tbody>
-            {articles.map((a) => (
-              <tr key={a.id}>
-                <td className="name">{a.name}</td>
-                <td className="price">{a.price} €</td>
-                <td className="qty">{a.qty}</td>
-              </tr>
-            ))}
-          </tbody>
+          <TBody isPending={isPending} articles={articles} />
         </table>
+
         <p>{errorMsg}</p>
       </div>
     </main>
