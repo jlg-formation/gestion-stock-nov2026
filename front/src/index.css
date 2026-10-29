@@ -53,13 +53,15 @@ main {
   text-align: center;
 }
 
-button {
+button,
+a.button {
   padding: 8px 16px;
   background-color: #333;
   color: white;
   border: none;
   border-radius: 4px;
   cursor: pointer;
+  text-decoration: inherit;
 }
 
 button:hover {
