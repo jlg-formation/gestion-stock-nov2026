@@ -8,13 +8,18 @@ const StockAdd = lazy(() => import("../routes/StockAdd"));
 
 export default function Body() {
   return (
-    <Suspense fallback={<p>Chargement...</p>}>
-      <Routes>
-        <Route index element={<Home />} />
-        <Route path="about" element={<About />} />
-        <Route path="stock" element={<StockList />} />
-        <Route path="stock/add" element={<StockAdd />} />
-      </Routes>
-    </Suspense>
+    <Routes>
+      <Route index element={<Home />} />
+      <Route path="about" element={<About />} />
+      <Route path="stock" element={<StockList />} />
+      <Route
+        path="stock/add"
+        element={
+          <Suspense fallback={<p>Chargement...</p>}>
+            <StockAdd />
+          </Suspense>
+        }
+      />
+    </Routes>
   );
 }
