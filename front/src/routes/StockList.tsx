@@ -1,18 +1,43 @@
 import { useEffect, useState } from "react";
+import { sleep } from "../misc/sleep";
 import type { Article } from "../types/Article";
 
 export default function StockList() {
   const [articles, setArticles] = useState<Article[]>([]);
+  const [errorMsg, setErrorMsg] = useState("");
 
   useEffect(() => {
+    const controller = new AbortController();
     const load = async () => {
-      console.log("loading articles...");
-      const response = await fetch("/api/articles");
-      const json = await response.json();
-      setArticles(json);
+      try {
+        setErrorMsg("");
+        console.log("loading articles...");
+        await sleep(2000);
+        const response = await fetch("/api/articles", {
+          signal: controller.signal,
+        });
+        if (response.ok === false) {
+          throw new Error();
+        }
+        const json = await response.json();
+        console.log("json: ", json);
+        setArticles(json);
+      } catch (err) {
+        if (controller.signal.aborted) {
+          console.log("requete interrompue");
+          return; // Annulation normale, pas une erreur
+        }
+        console.log("err: ", err);
+        setErrorMsg("Erreur Technique (chargement des articles impossible)");
+      }
     };
 
     load();
+
+    return () => {
+      console.log("nettoyage de l'effect");
+      // controller.abort();
+    };
   }, []);
 
   return (
@@ -42,6 +67,7 @@ export default function StockList() {
             ))}
           </tbody>
         </table>
+        <p>{errorMsg}</p>
       </div>
     </main>
   );
