@@ -1,7 +1,9 @@
+import { Link } from "react-router";
+
 export default function Footer() {
   return (
     <footer>
-      <a href="#">Mentions légales</a>
+      <Link to="/about">Mentions légales</Link>
     </footer>
   );
 }

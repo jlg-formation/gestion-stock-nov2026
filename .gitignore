@@ -1,0 +1,4 @@
+# JLG
+.cours-build/
+.cours-output/
+*.pptx

@@ -30,6 +30,14 @@ header img {
   margin-right: 16px;
 }
 
+/* le lien du logo garde la couleur et la mise en page du header */
+header a {
+  display: flex;
+  align-items: center;
+  color: inherit;
+  text-decoration: none;
+}
+
 /* centre le contenu du main verticalement et horizontalement */
 /* le main prend tout l'espace disponible */
 /* dispose les elements verticalement */
