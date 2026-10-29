@@ -1,5 +1,7 @@
 import { useId, useState } from "react";
 import { useNavigate } from "react-router";
+import { useArticleStore } from "../stores/ArticleStore";
+import type { NewArticle } from "../types/Article";
 
 export default function StockAdd() {
   const nameId = useId();
@@ -12,15 +14,22 @@ export default function StockAdd() {
 
   const navigate = useNavigate();
 
+  const articleStore = useArticleStore();
+
   return (
     <main>
       <h1>Ajout d'un article</h1>
       <form
-        onSubmit={(event) => {
+        onSubmit={async (event) => {
           event.preventDefault();
           console.log("event: ", event);
           // adding article to the database
-
+          const newArticle: NewArticle = {
+            name,
+            price,
+            qty,
+          };
+          await articleStore.add(newArticle);
           navigate("/stock");
         }}
       >

@@ -1,51 +1,17 @@
-import { useEffect, useState } from "react";
-import { sleep } from "../misc/sleep";
-import type { Article } from "../types/Article";
-import TBody from "../components/TBody";
 import { Link } from "react-router";
+import TBody from "../components/TBody";
+import { useArticleStore } from "../stores/ArticleStore";
+import { useEffect } from "react";
 
 export default function StockList() {
-  const [articles, setArticles] = useState<Article[]>([]);
-  const [errorMsg, setErrorMsg] = useState("");
-  const [isPending, setIsPending] = useState(false);
+  const { refresh: myRefresh, articles, isPending, errorMsg } = useArticleStore();
 
   useEffect(() => {
-    const controller = new AbortController();
     const load = async () => {
-      try {
-        setErrorMsg("");
-        setIsPending(true);
-        console.log("loading articles...");
-        await sleep(300);
-        const response = await fetch("/api/articles", {
-          signal: controller.signal,
-        });
-        if (response.ok === false) {
-          throw new Error();
-        }
-        const json = await response.json();
-        console.log("json: ", json);
-        setArticles(json);
-      } catch (err) {
-        if (controller.signal.aborted) {
-          console.log("requete interrompue");
-          return; // Annulation normale, pas une erreur
-        }
-        console.log("err: ", err);
-        setErrorMsg("Erreur Technique (chargement des articles impossible)");
-        setArticles([]);
-      } finally {
-        setIsPending(false);
-      }
+      await myRefresh();
     };
-
     load();
-
-    return () => {
-      console.log("nettoyage de l'effect");
-      // controller.abort();
-    };
-  }, []);
+  }, [myRefresh]);
 
   return (
     <main>
