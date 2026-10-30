@@ -1,4 +1,4 @@
-import { useId, useState } from "react";
+import { useEffect, useId, useRef, useState } from "react";
 import { useNavigate } from "react-router";
 import { useArticleStore } from "../stores/ArticleStore";
 import type { NewArticle } from "../types/Article";
@@ -15,6 +15,12 @@ export default function StockAdd() {
   const navigate = useNavigate();
 
   const articleStore = useArticleStore();
+
+  const inputName = useRef<HTMLInputElement>(null);
+
+  useEffect(() => {
+    inputName.current?.select();
+  }, []);
 
   return (
     <main>
@@ -35,7 +41,13 @@ export default function StockAdd() {
       >
         <div>
           <label htmlFor={nameId}>Nom</label>
-          <input type="text" id={nameId} value={name} onChange={(e) => setName(e.target.value)} />
+          <input
+            type="text"
+            id={nameId}
+            value={name}
+            onChange={(e) => setName(e.target.value)}
+            ref={inputName}
+          />
         </div>
         <div>
           <label htmlFor={priceId}>Prix</label>
