@@ -2,15 +2,30 @@ import { Link } from "react-router";
 import TBody from "../components/TBody";
 import { useStockList } from "../misc/useStockList";
 import { useArticleStore } from "../stores/ArticleStore";
+import type { Article } from "../types/Article";
+import { useState } from "react";
 
 export default function StockList() {
   const { articles, errorMsg, isPending } = useStockList();
-  const { refresh } = useArticleStore();
+  const { refresh, remove } = useArticleStore();
+  const [selectedArticleIds, setSelectedArticleIds] = useState<Set<Article["id"]>>(new Set());
 
   const handleRefresh = async () => {
     console.log("refresh");
     await refresh();
     console.log("refreshed");
+  };
+
+  const handleDelete = async () => {
+    console.log("selectedArticlesIds: ", selectedArticleIds);
+    await remove(selectedArticleIds);
+    setSelectedArticleIds(new Set());
+    await refresh();
+  };
+
+  const handleSelection = (s: Set<Article["id"]>) => {
+    console.log("handleSelection: selectedArticleIds: ", s);
+    setSelectedArticleIds(s);
   };
 
   return (
@@ -22,7 +37,7 @@ export default function StockList() {
           <Link to="/stock/add" className="button">
             Ajouter
           </Link>
-          <button>Supprimer</button>
+          <button onClick={handleDelete}>Supprimer</button>
         </nav>
         <table>
           <thead>
@@ -32,7 +47,7 @@ export default function StockList() {
               <th className="qty">Quantité</th>
             </tr>
           </thead>
-          <TBody isPending={isPending} articles={articles} />
+          <TBody isPending={isPending} articles={articles} onSelectionChange={handleSelection} />
         </table>
 
         <p>{errorMsg}</p>

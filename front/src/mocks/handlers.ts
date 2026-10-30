@@ -52,4 +52,18 @@ export const handlers = [
       status: 201,
     });
   }),
+  http.delete("/api/articles", async ({ request }) => {
+    // 1. Récupérer le tableau des IDs à supprimer
+    const ids = (await request.json()) as Article["id"][];
+
+    // 2. Garder uniquement les articles non supprimés
+    const articles = loadArticles();
+    const remaining = articles.filter((article) => !ids.includes(article.id));
+    saveArticles(remaining);
+
+    // 3. Retourner une réponse HTTP sans contenu
+    return new HttpResponse(null, {
+      status: 204,
+    });
+  }),
 ];

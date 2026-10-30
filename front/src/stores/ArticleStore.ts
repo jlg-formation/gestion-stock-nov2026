@@ -8,6 +8,7 @@ type ArticleStoreState = {
   errorMsg: string;
   add: (newArticle: NewArticle) => Promise<void>;
   refresh: (controller?: AbortController) => Promise<void>;
+  remove: (selectedArticleIds: Set<Article["id"]>) => Promise<void>;
 };
 
 export const useArticleStore = create<ArticleStoreState>((set) => ({
@@ -21,6 +22,16 @@ export const useArticleStore = create<ArticleStoreState>((set) => ({
         "Content-Type": "application/json",
       },
       body: JSON.stringify(newArticle),
+    });
+  },
+  remove: async (selectedArticleIds: Set<Article["id"]>) => {
+    const array = [...selectedArticleIds];
+    await fetch("/api/articles", {
+      method: "DELETE",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(array),
     });
   },
   refresh: async (controller = new AbortController()) => {

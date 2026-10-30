@@ -6,18 +6,22 @@ import { useState } from "react";
 export interface TBodyProps {
   isPending: boolean;
   articles: Article[];
+  onSelectionChange: (selectedArticleIds: Set<Article["id"]>) => void;
 }
 
-export default function TBody({ isPending, articles }: TBodyProps) {
+export default function TBody({ isPending, articles, onSelectionChange }: TBodyProps) {
   const [selectedArticleIds, setSelectedArticleIds] = useState(new Set<Article["id"]>());
+
   const handleSelect = (articleId: Article["id"]) => () => {
     console.log("select", articleId);
     if (selectedArticleIds.has(articleId)) {
       selectedArticleIds.delete(articleId);
-      setSelectedArticleIds(new Set(selectedArticleIds));
-      return;
+    } else {
+      selectedArticleIds.add(articleId);
     }
-    setSelectedArticleIds(new Set(selectedArticleIds.add(articleId)));
+    const newSelection = new Set(selectedArticleIds);
+    setSelectedArticleIds(newSelection);
+    onSelectionChange(newSelection);
   };
 
   return (
