@@ -7,7 +7,7 @@ type ArticleStoreState = {
   isPending: boolean;
   errorMsg: string;
   add: (newArticle: NewArticle) => Promise<void>;
-  refresh: (controller: AbortController) => Promise<void>;
+  refresh: (controller?: AbortController) => Promise<void>;
 };
 
 export const useArticleStore = create<ArticleStoreState>((set) => ({
@@ -23,7 +23,7 @@ export const useArticleStore = create<ArticleStoreState>((set) => ({
       body: JSON.stringify(newArticle),
     });
   },
-  refresh: async (controller) => {
+  refresh: async (controller = new AbortController()) => {
     try {
       console.log("start refresh");
       set({ isPending: true, errorMsg: "" });

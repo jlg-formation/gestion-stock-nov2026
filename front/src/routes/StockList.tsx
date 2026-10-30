@@ -1,16 +1,24 @@
 import { Link } from "react-router";
 import TBody from "../components/TBody";
 import { useStockList } from "../misc/useStockList";
+import { useArticleStore } from "../stores/ArticleStore";
 
 export default function StockList() {
   const { articles, errorMsg, isPending } = useStockList();
+  const { refresh } = useArticleStore();
+
+  const handleRefresh = async () => {
+    console.log("refresh");
+    await refresh();
+    console.log("refreshed");
+  };
 
   return (
     <main>
       <h1>Liste du stock</h1>
       <div className="content">
         <nav>
-          <button>Rafraichir</button>
+          <button onClick={handleRefresh}>Rafraichir</button>
           <Link to="/stock/add" className="button">
             Ajouter
           </Link>
