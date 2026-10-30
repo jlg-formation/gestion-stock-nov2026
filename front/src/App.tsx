@@ -3,6 +3,7 @@ import Footer from "./layout/Footer";
 import Header from "./layout/Header";
 
 function App() {
+  console.log("App...");
   return (
     <>
       <Header />
